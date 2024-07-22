@@ -1,8 +1,15 @@
 import { z } from "zod";
 
+export const tzSchema = z.enum([
+  "US (PST)",
+  "US (EST)",
+  "Europe (CET)",
+  "Europe (GMT)",
+]);
+
 export const refundSchema = z.object({
   name: z.string().min(1, "Name required"),
-  timezone: z.enum(["US (PST)", "US (EST)", "Europe (CET)", "Europe (GMT)"]),
+  timezone: tzSchema,
   signupDate: z.string().min(1, "Signup date required"),
   requestSource: z.enum(["web app", "phone"]),
   investmentDate: z.string().min(1, "Investment date required"),
