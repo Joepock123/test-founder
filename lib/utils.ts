@@ -25,12 +25,10 @@ const getDateFormat = (tz: Refund["timezone"]) => {
   }
 };
 
-const getTosDate = (tz: Refund["timezone"]) => {
-  if (["US (PST)", "US (EST)"].includes(tz)) {
-    return "1/2/2020";
-  } else {
-    return "2/1/2020";
-  }
+const getTosDeadline = (tz: Refund["timezone"]) => {
+  const tzForMoment = tzMap[tz];
+  const deadline = moment.tz("2020-01-02 23:59:59", tzForMoment);
+  return deadline;
 };
 
 const tzMap = {
@@ -58,18 +56,17 @@ export const getMomentWithTz = ({
 
 export const getIsNewTos = ({
   date,
-  time = "00:00",
   tz,
+  time = "00:00",
 }: {
   date: string;
   tz: Refund["timezone"];
   time?: string;
 }) => {
   const signupMoment = getMomentWithTz({ date, time, tz });
-  const tosDate = getTosDate(tz);
-  const tosMoment = getMomentWithTz({ date: tosDate, tz });
+  const deadineMoment = getTosDeadline(tz);
 
-  return signupMoment.isAfter(tosMoment);
+  return signupMoment.isAfter(deadineMoment);
 };
 
 export const getRegisteredMoment = ({
