@@ -20,7 +20,7 @@ Run the unit tests with `npm test`.
 
 1. As a firm admin. I want to see if a list of customers reversal requests are eligible for a refund.
 
-### Acceptabiltiy Criteria
+### Acceptability Criteria
 
 1. Provided a timezone and Sign up date, calculate if the customer is eligible for the old or new TOS.
 2. Provided a request source, timezone, request date and time, calculate when the refund request was registered.
@@ -33,6 +33,12 @@ Run the unit tests with `npm test`.
 - Speed, 2 hours is not much time to understand so many requirements and translate them to reliable business logic.
 - Handling dates and times across different timezones can be tricky to manage.
 - The data in the refund request list has not been validated. It is possible there are errors in the column values.
+
+## Assumptions
+
+- The dates and times are correct. There are no complications in addition to the Europe and US date formatting. For example, I do not need to check a time of 27:00 or a US date of 28/6/2023 has been submitted.
+- The TOS date is relative to the timezone. For example, _A PST UST based customer signing up at 23:59 PST US time on the cut off date is valid for old TOS_.
+- Cutoff times are not inclusive. For example, _17:00 is out of work hours_.
 
 ## Technical Choices
 
