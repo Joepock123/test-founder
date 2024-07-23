@@ -33,6 +33,7 @@ Run the unit tests with `npm test`.
 - Speed, 2 hours is not much time to understand so many requirements and translate them to reliable business logic.
 - Handling dates and times across different timezones can be tricky to manage.
 - The data in the refund request list has not been validated. It is possible there are errors in the column values.
+- In moment.js the week starts on a Sunday and an index of 0. Use the `.isoWeekday()` to use a more logical index range of 1-7. This caught me out and introduced a bug with the refund request approval for Raja Ortiz.
 
 ## Assumptions
 

@@ -79,28 +79,22 @@ export const getRegisteredMoment = ({
   if (requestSource === "phone") {
     const ukTime = requestMoment.tz("Europe/London");
 
-    const dayOfWeek = ukTime.day();
+    const dayOfWeek = ukTime.isoWeekday();
     const hour = ukTime.hour();
-    const minute = ukTime.minute();
 
     const startHour = 9;
     const endHour = 17;
 
-    if (
-      dayOfWeek >= 1 &&
-      dayOfWeek <= 5 &&
-      (hour > startHour || (hour === startHour && minute >= 0)) &&
-      hour < endHour
-    ) {
+    if (dayOfWeek <= 5 && hour >= startHour && hour < endHour) {
       return ukTime;
     }
 
     let nextEligibleMoment = ukTime.clone();
 
-    if (dayOfWeek >= 5 || (dayOfWeek === 5 && hour >= endHour)) {
+    if (dayOfWeek > 5 || (dayOfWeek === 5 && hour >= endHour)) {
       nextEligibleMoment
         .add(1, "weeks")
-        .day(1)
+        .isoWeekday(1)
         .hour(startHour)
         .minute(0)
         .second(0);
