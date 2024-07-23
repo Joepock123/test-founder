@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { HttpError, Refund, refundSchema } from "./types/types";
 import { z } from "zod";
+import { decorateRefund } from "@/lib/utils";
 
 export default function handler(
   req: NextApiRequest,
@@ -12,7 +13,8 @@ export default function handler(
   const result = z.array(refundSchema).safeParse(refunds);
 
   if (result.success) {
-    res.status(200).json(result.data);
+    const dataDecorated = result.data.map(decorateRefund);
+    res.status(200).json(dataDecorated);
   } else {
     res
       .status(500)

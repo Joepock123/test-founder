@@ -7,6 +7,7 @@ export const tzSchema = z.enum([
   "Europe (GMT)",
 ]);
 
+export type Refund = z.infer<typeof refundSchema>;
 export const refundSchema = z.object({
   name: z.string().min(1, "Name required"),
   timezone: tzSchema,
@@ -18,7 +19,14 @@ export const refundSchema = z.object({
   refundRequestTime: z.string().min(1, "Refund request time required"),
 });
 
-export type Refund = z.infer<typeof refundSchema>;
+export type RefundDecorated = z.infer<typeof decoratedRefundSchema>;
+const decoratedRefundSchema = refundSchema.extend({
+  newTos: z.boolean(),
+  requestDate: z.date(),
+  registeredDate: z.date(),
+  deadlineDate: z.date(),
+  isApproved: z.boolean(),
+});
 
 export interface HttpError {
   message: string;

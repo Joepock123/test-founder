@@ -1,13 +1,13 @@
 import { fetcher } from "@/lib/utils";
 import { Inter } from "next/font/google";
 import useSWR from "swr";
-import { Refund } from "./api/types/types";
+import { RefundDecorated } from "./api/types/types";
 import { TableRefunds } from "@/components/TableRefunds";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  const { data, error } = useSWR<Refund[]>("/api/refunds", fetcher);
+  const { data, error } = useSWR<RefundDecorated[]>("/api/refunds", fetcher);
 
   return (
     <main
